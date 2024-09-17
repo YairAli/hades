@@ -113,7 +113,7 @@ class Employee(models.Model):
 
 
 class HeadOffice(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Nombre')
+    name = models.CharField(max_length=50, verbose_name='Nombre', unique=True)
     address = models.CharField(max_length=100, verbose_name='Dirección')
     telephone = models.CharField(max_length=10, verbose_name='Teléfono')
     email = models.EmailField(max_length=50, verbose_name='Correo electrónico')
@@ -131,7 +131,7 @@ class HeadOffice(models.Model):
         ordering = ['id']
 
 class BranchOffice(models.Model):
-    name = models.CharField(max_length=50, blank=False, verbose_name='Nombre')
+    name = models.CharField(max_length=50, blank=False, verbose_name='Nombre', unique=True)
     address = models.CharField(max_length=100, blank=False, verbose_name='Dirección')
     telephone = models.CharField(max_length=10, blank=False, verbose_name='Teléfono')
     email = models.EmailField(max_length=50, verbose_name='Correo electrónico')
@@ -154,7 +154,7 @@ class BranchOffice(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Nombre')
+    name = models.CharField(max_length=50, verbose_name='Nombre', unique=True)
     description = models.CharField(max_length=100, verbose_name='Descripción')
 
     def __str__(self):
@@ -167,7 +167,7 @@ class Category(models.Model):
         ordering = ['id']
 
 class DepartamentProduct(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Nombre')
+    name = models.CharField(max_length=50, verbose_name='Nombre', unique=True)
     description = models.CharField(max_length=100, verbose_name='Descripción')
 
     def __str__(self):
@@ -181,8 +181,8 @@ class DepartamentProduct(models.Model):
 
 
 class Product(models.Model):
-    key = models.CharField(max_length=50, verbose_name='Clave')
-    name = models.CharField(max_length=50, verbose_name='Nombre')
+    key = models.CharField(max_length=50, verbose_name='Clave', unique=True)
+    name = models.CharField(max_length=50, verbose_name='Nombre', unique=True)
     description = models.CharField(max_length=100, verbose_name='Descripción')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Categoría')
     departament = models.ForeignKey(DepartamentProduct, on_delete=models.CASCADE, verbose_name='Departamento')
@@ -233,7 +233,7 @@ class Sale(models.Model):
         ordering = ['id']
 
 
-class DetSale(models.Model):
+class DetailSale(models.Model):
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE, verbose_name='Venta')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
     qty = models.IntegerField(default=0, verbose_name='Cantidad')
@@ -271,7 +271,7 @@ class Quote(models.Model):
         ordering = ['id']
 
 
-class DetQuote(models.Model):
+class DetailQuote(models.Model):
     quote = models.ForeignKey(Quote, on_delete=models.CASCADE, verbose_name='Cotización')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Producto')
     qty = models.IntegerField(default=0, verbose_name='Cantidad')
